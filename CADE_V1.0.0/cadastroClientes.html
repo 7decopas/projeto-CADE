@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Clientes</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/CLIENTEbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li><a href="inicio.html">Início</a></li>
+                                <li><a href="cadastroProduto.html">Produtos</a></li>
+                                <li class="active"><a href="cadastroClientes.html">Clientes</a></li>
+                                <li><a href="registros.html">Registros</a></li>
+                                <li><a href="requisicoes.html">Vendas</a></li>
+                                <li><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div class="back-color">
+                        <div class="container-inpts">
+                            <div class="ci-title">Cadastro de Clientes</div>
+                            <label>
+                                <input name="nome" placeholder="Nome">
+                            </label>
+                            <label>
+                                <input name="codCliente" placeholder="CPF">
+                            </label>
+                            <label>
+                                <input name="telefone" placeholder="Telefone">
+                            </label>
+                            <label>
+                                <input name="email" placeholder="E-mail">
+                            </label>
+                            <label>
+                                <input name="endereco" placeholder="Endereço">
+                            </label>
+
+                            <div class="clearfix"></div>
+                            <button name="acao">Cadastrar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        document.querySelector('[name="acao"]').addEventListener('click', function (e) {
+            var clientesArr = JSON.parse(localStorage.getItem('clientes')) || [];
+
+            var _codCliente = document.querySelector('[name="codCliente"]').value,
+                _nome = document.querySelector('[name="nome"]').value,
+                _telefone = document.querySelector('[name="telefone"]').value,
+                _email = document.querySelector('[name="email"]').value,
+                _endereco = document.querySelector('[name="endereco"]').value;
+
+            if (!_codCliente || !_nome || !_telefone || !_email || !_endereco) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(_email)) {
+                alert('Por favor, insira um endereço de e-mail válido.');
+                return;
+            }
+
+            var phoneRegex = /^\d{11,}$/;
+            if (!phoneRegex.test(_telefone)) {
+                alert('Por favor, insira um número de telefone válido.');
+                return;
+            }
+
+            var clienteExistente = clientesArr.find(function (cliente) {
+                return cliente.codCliente === _codCliente;
+            });
+
+            if (clienteExistente) {
+                alert('Já existe um cliente com este código.');
+                return;
+            }
+
+            var cliente = {
+                codCliente: _codCliente,
+                nome: _nome,
+                telefone: _telefone,
+                email: _email,
+                endereco: _endereco
+            };
+
+            clientesArr.push(cliente);
+
+            localStorage.setItem('clientes', JSON.stringify(clientesArr));
+
+            alert('Cadastro de cliente concluído!');
+        });
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>

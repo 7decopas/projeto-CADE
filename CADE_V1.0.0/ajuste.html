@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajustes</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/AJUSTbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li><a href="inicio.html">Início</a></li>
+                                <li><a href="cadastroProduto.html">Produtos</a></li>
+                                <li><a href="cadastroClientes.html">Clientes</a></li>
+                                <li><a href="registros.html">Registros</a></li>
+                                <li><a href="requisicoes.html">Vendas</a></li>
+                                <li class="active"><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2" valign="center">
+                    <div class="back-color">
+                        <div class="container-inpts">
+                            <div class="ci-title">Ajuste de Estoque</div>
+                            <label>
+                                <input name="cod" placeholder="Código">
+                            </label>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td width="25%">
+                                            <label>
+                                                <input name="nome" placeholder="Item" readonly>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="qtd" placeholder="Qtd." readonly>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="preco" placeholder="Preço" readonly>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="setor" placeholder="Setor" readonly>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <br>
+                            <hr>
+                            <br>
+
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td width="50%">
+                                            <label>
+                                                <input name="prodNome" placeholder="Novo nome">
+                                            </label>
+                                            <label>
+                                                <input name="qtd_pedido" placeholder="Quantidade a ser ajustada">
+                                            </label>
+                                            <label>
+                                                <input name="NOVAqtdMin" type="number" min="1" max="1.000.000"
+                                                    placeholder="Quantidade Mínima">
+                                            </label>
+                                            <label>
+                                                <input name="NOVAqtdMax" type="number" min="1" max="1.000.000"
+                                                    placeholder="Quantidade Máxima">
+                                            </label>
+                                            <label>
+                                                <input name="novo_setor" placeholder="Novo Setor">
+                                            </label>
+                                            <label>
+                                                <input name="novo_preco" placeholder="Novo Preço (R$)">
+                                            </label>
+                                            <label>
+                                                <input name="observacoes" placeholder="Observações">
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                <div class="clearfix"></div>
+                                <button name="acao">Confirmar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <script>
+        var produtoArr = JSON.parse(localStorage.getItem('produtos')) || [];
+        var _produtoSelecionado;
+
+        function buscar_produtos(codProd) {
+            _produtoSelecionado = produtoArr.find(_produto => _produto.codigo == codProd);
+
+            if (_produtoSelecionado) {
+                document.querySelector('[name="nome"]').value = _produtoSelecionado.nome;
+                document.querySelector('[name="qtd"]').value = _produtoSelecionado.qtd;
+                document.querySelector('[name="preco"]').value = "R$" + _produtoSelecionado.price;
+                document.querySelector('[name="setor"]').value = _produtoSelecionado.setor;
+            } else {
+                document.querySelector('[name="nome"]').value = '';
+                document.querySelector('[name="qtd"]').value = '';
+                document.querySelector('[name="preco"]').value = '';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var url = new URL(window.location.href);
+            var codigoRedirect = url.searchParams.get("cod");
+
+            document.querySelector('[name="cod"]').value = codigoRedirect;
+
+            buscar_produtos(codigoRedirect);
+        });
+
+        document.querySelector('[name="cod"]').addEventListener('change', function (e) {
+            buscar_produtos(e.target.value);
+        });
+
+        document.querySelector('[name="cod"]').addEventListener('keyup', function (e) {
+            buscar_produtos(e.target.value);
+        });
+
+        document.querySelector('[name="acao"]').addEventListener('click', function () {
+            if (_produtoSelecionado) {
+                var novoNomeInput = document.querySelector('[name="prodNome"]');
+                var novoNome = novoNomeInput.value;
+                var qtdAjustadaInput = document.querySelector('[name="qtd_pedido"]');
+                var qtdAjustada = parseInt(qtdAjustadaInput.value) || 0;
+                var NOVAqtdMinInput = document.querySelector('[name="NOVAqtdMin"]');
+                var NOVAqtdMin = NOVAqtdMinInput.value !== "" ? parseInt(NOVAqtdMinInput.value) : undefined;
+                var NOVAqtdMaxInput = document.querySelector('[name="NOVAqtdMax"]');
+                var NOVAqtdMax = NOVAqtdMaxInput.value !== "" ? parseInt(NOVAqtdMaxInput.value) : undefined;
+                var novoSetorInput = document.querySelector('[name="novo_setor"]');
+                var novoSetor = novoSetorInput.value;
+                var novoPrecoInput = document.querySelector('[name="novo_preco"]');
+                var novoPreco = novoPrecoInput.value !== "" ? parseFloat(novoPrecoInput.value.replace(',', '.')) : "";
+                var observacoes = document.querySelector('[name="observacoes"]').value;
+
+                var alteracaoRealizada = false;
+
+                if (novoSetor !== "") {
+                    _produtoSelecionado.setor = novoSetor;
+                    alteracaoRealizada = true;
+                }
+
+                if (novoNome !== "") {
+                    _produtoSelecionado.nome = novoNome;
+                    alteracaoRealizada = true;
+                }
+
+                if (novoPreco !== "") {
+                    _produtoSelecionado.price = parseFloat(novoPreco);
+                    alteracaoRealizada = true;
+                } else {
+                    novoPreco = _produtoSelecionado.price;
+                }
+
+                if (NOVAqtdMin !== undefined && _produtoSelecionado.qtdMin !== NOVAqtdMin) {
+                    _produtoSelecionado.qtdMin = NOVAqtdMin;
+                    alteracaoRealizada = true;
+                }
+
+                if (NOVAqtdMax !== undefined && _produtoSelecionado.qtdMax !== NOVAqtdMax) {
+                    _produtoSelecionado.qtdMax = NOVAqtdMax;
+                    alteracaoRealizada = true;
+                }
+
+                if (qtdAjustada !== 0) {
+                    _produtoSelecionado.qtd = parseInt(_produtoSelecionado.qtd) + qtdAjustada;
+
+                    if (_produtoSelecionado.qtd <= 0) {
+                        produtoArr = produtoArr.filter(produto => produto.codigo !== _produtoSelecionado.codigo);
+                        document.querySelector('[name="qtd"]').value = '';
+                    } else {
+                        document.querySelector('[name="qtd"]').value = _produtoSelecionado.qtd;
+                    }
+
+                    alteracaoRealizada = true;
+                }
+
+                if (!alteracaoRealizada) {
+                    alert('Nenhuma alteração realizada. Coloque valores válidos.');
+                    return;
+                }
+
+                if (parseFloat(qtdAjustada) > 1000000) {
+                    alert('O quantidade ajustada não pode ser maior do que 1.000.000');
+                    return;
+                }
+
+                if (parseFloat(novoPreco) > 1000000) {
+                    alert('A novo preço não pode ser maior do que R$1.000.000');
+                    return;
+                }
+
+                var ajustesArr = JSON.parse(localStorage.getItem('ajustes')) || [];
+
+                var horario = new Date();
+                var ajuste = {
+                    nome: _produtoSelecionado.nome,
+                    codigo: _produtoSelecionado.codigo,
+                    quantidadeAjustada: qtdAjustada,
+                    NOVAqtdMin: NOVAqtdMin,
+                    NOVAqtdMax: NOVAqtdMax,
+                    novoNome: novoNome,
+                    novoSetor: novoSetor,
+                    novoPreco: parseFloat(isNaN(novoPreco) ? "" : novoPreco),
+                    observacoes: observacoes,
+                    data: horario.toLocaleDateString(),
+                    hora: horario.toLocaleTimeString()
+                };
+
+                ajustesArr.push(ajuste);
+                alert('Ajuste Confirmado!');
+                localStorage.setItem('ajustes', JSON.stringify(ajustesArr));
+                localStorage.setItem('produtos', JSON.stringify(produtoArr));
+            } else {
+                alert('Selecione um produto.');
+            }
+        });
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>

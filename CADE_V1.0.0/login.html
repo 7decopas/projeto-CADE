@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/LOGINbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td></td>
+                <td>
+                    <div>
+                        <div>
+                            <ul>
+
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <center>
+                        <div class="logologin">
+                            <div class="glow-on-hover">
+                                <img src="assets/LOGO.png" alt="">
+                            </div>
+                        </div>
+                    </center>
+                    <br><br>
+                    <div class="back-color">
+                        <div class="container-inpts">
+                            <div class="ci-title">Login</div>
+                            <label>
+                                <input name="user" placeholder="Usuário">
+                            </label>
+                            <label>
+                                <input type="password" name="pass" placeholder="Senha">
+                            </label>
+                            <div class="clearfix"></div>
+                            <button id="loginButton" name="acao">Entrar</button>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+
+        </tbody>
+        <tfoot>
+            <tr>
+
+            </tr>
+
+        </tfoot>
+    </table>
+
+    <script>
+        document.getElementById('loginButton').addEventListener('click', function (e) {
+            realizarLogin();
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                realizarLogin();
+            }
+        });
+
+        function realizarLogin() {
+            var _user = document.querySelector('[name="user"]'),
+                _pass = document.querySelector('[name="pass"]');
+
+            if (_user.value == 'admin' && _pass.value == '12345') {
+                window.location.href = 'inicio.html';
+            } else {
+                alert('Usuário ou Senha incorretos.')
+            }
+        }
+    </script>
+</body>
+
+</html>

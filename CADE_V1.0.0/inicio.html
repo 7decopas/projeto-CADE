@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <table class="main-container" cellspacing="0" cellpading="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li class="active"><a href="inicio.html">Início</a></li>
+                                <li><a href="cadastroProduto.html">Produtos</a></li>
+                                <li><a href="cadastroClientes.html">Clientes</a></li>
+                                <li><a href="registros.html">Registros</a></li>
+                                <li><a href="requisicoes.html">Vendas</a></li>
+                                <li><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div class="button-container">
+
+                        <button class="square-button" id="btnVendas">
+                            <img src="assets/DIV_SALE.png" alt="">
+                            <span class="button-number">X</span>
+                            <span class="button-description">VENDAS MENSAIS:<br><span id="Vendas"></span></span>
+                        </button>
+
+                        <button class="square-button" id="btnValorTotal">
+                            <img src="assets/DIV_MONEY.png" alt="">
+                            <span class="button-number">R$0.00</span>
+                            <span class="button-description">VALOR TOTAL DOS PRODUTOS:<br><span
+                                    id="Totais"></span></span>
+                        </button>
+
+                        <button class="square-button" id="btnProblemaEstoque">
+                            <img src="assets/DIV_STOCK.png" alt="">
+                            <span class="button-number">X</span>
+                            <span class="button-description">VERIFICAR QUANTIDADE: <br><span
+                                    id="problemaEstoque"></span></span>
+                        </button>
+                    </div>
+
+                    <div class="button-container">
+                        <button class="square-button" id="btnProdutos">
+                            <img src="assets/DIV_PROD.png" alt="">
+                            <span class="button-number">X</span>
+                            <span class="button-description">ITENS EM ESTOQUE:</span>
+                        </button>
+
+                        <button class="square-button" id="btnClientes">
+                            <img src="assets/DIV_CLIENT.png" alt="">
+                            <span class="button-number">X</span>
+                            <span class="button-description">CLIENTES CADASTRADOS:<br><span id="Clientes"></span></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+
+        </tfoot>
+    </table>
+
+    <script>
+        var produtoArr = JSON.parse(localStorage.getItem('produtos')) || [];
+        var vendasArr = JSON.parse(localStorage.getItem('vendas')) || [];
+        var clientesArr = JSON.parse(localStorage.getItem('clientes')) || [];
+
+        function atualizarQuantidadeTotal() {
+            var quantidadeTotal = produtoArr.length;
+            document.querySelector('#btnProdutos .button-number').textContent = quantidadeTotal.toString();
+        }
+
+        function atualizarClientes() {
+            var totalClientes = clientesArr.length;
+            document.querySelector('#btnClientes .button-number').textContent = totalClientes.toString();
+        }
+
+        function atualizarValorTotal() {
+            var quantidadeTotal = produtoArr.reduce(function (total, produto) {
+                return total + parseFloat(produto.qtd);
+            }, 0);
+
+            var valorTotal = produtoArr.reduce(function (total, produto) {
+                return total + parseFloat(produto.qtd) * parseFloat(produto.price);
+            }, 0);
+
+            document.querySelector('#btnValorTotal .button-number').textContent = quantidadeTotal.toString();
+            document.querySelector('#Totais').textContent = 'R$' + valorTotal.toFixed(2);
+        }
+
+        function atualizarMenorMaiorEstoque() {
+            var produtosComMenorQuantidade = produtoArr.filter(function (produto) {
+                return parseInt(produto.qtd, 10) < produto.qtdMin;
+            });
+
+            var produtosComMaiorQuantidade = produtoArr.filter(function (produto) {
+                return parseInt(produto.qtd, 10) > produto.qtdMax;
+            });
+
+            var menorEstoqueProduto = produtosComMenorQuantidade.reduce(function (menor, produto) {
+                return parseInt(menor.qtd, 10) < parseInt(produto.qtd, 10) ? menor : produto;
+            }, {});
+
+            var maiorEstoqueProduto = produtosComMaiorQuantidade.reduce(function (maior, produto) {
+                return parseInt(maior.qtd, 10) > parseInt(produto.qtd, 10) ? maior : produto;
+            }, {});
+
+            var totalProdutosComProblema = produtosComMenorQuantidade.length + produtosComMaiorQuantidade.length;
+
+            if (totalProdutosComProblema > 0) {
+                document.querySelector('#btnProblemaEstoque .button-number').textContent = totalProdutosComProblema.toString();
+            } else {
+                document.querySelector('#btnProblemaEstoque .button-number').textContent = 'N/A';
+                document.querySelector('#problemaEstoque').textContent = 'N/A';
+            }
+            if (totalProdutosComProblema) {
+                document.title = "Início (" + totalProdutosComProblema + ")";
+            }
+        }
+
+
+        function atualizarVendas() {
+            var quantidadeTotalVendas = vendasArr.length;
+            var valorTotalVendas = vendasArr.reduce(function (total, venda) {
+                return total + parseFloat(venda.qtd) * parseFloat(venda.preco_unitario);
+            }, 0);
+
+            document.querySelector('#btnVendas .button-number').textContent = quantidadeTotalVendas.toString();
+            document.querySelector('#Vendas').textContent = 'R$' + valorTotalVendas.toFixed(2);
+        }
+
+        window.onload = function () {
+            atualizarQuantidadeTotal();
+            atualizarValorTotal();
+            atualizarVendas();
+            atualizarClientes();
+            atualizarMenorMaiorEstoque();
+        };
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>

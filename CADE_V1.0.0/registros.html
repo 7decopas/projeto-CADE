@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/STOCKbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .abaixo-min {
+            background-color: #ff4545;
+        }
+
+        .acima-max {
+            background-color: #ff4545;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li><a href="inicio.html">Início</a></li>
+                                <li><a href="cadastroProduto.html">Produtos</a></li>
+                                <li><a href="cadastroClientes.html">Clientes</a></li>
+                                <li class="active"><a href="registros.html">Registros</a></li>
+                                <li><a href="requisicoes.html">Vendas</a></li>
+                                <li><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2" valign="top">
+                    <center>
+                        <table class="tbl-default" name="tbl-produtos" cellpadding="0" cellspacing="0"
+                            style="display: none;">
+                            <caption>Produtos:</caption>
+                            <thead>
+                                <div class="regist-botao">
+                                    <div class="clearfix"></div>
+                                    <button name="estoque-botao">Produtos</button>
+                                    <button name="ajuste-botao">Ajustes</button>
+                                    <button name="clientes-botao">Clientes</button>
+                                    <button name="venda-botao">Vendas</button>
+                                </div>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Código</th>
+                                    <th>Setor/Prateleira</th>
+                                    <th>Quantidade</th>
+                                    <th>Qtd. Min.</th>
+                                    <th>Qtd. Max.</th>
+                                    <th>Tipo</th>
+                                    <th>Unidade</th>
+                                    <th>Unitário (R$)</th>
+                                    <th>Total (R$)</th>
+                                    <th>Fabricação</th>
+                                    <th>Validade</th>
+                                    <th>Classificação</th>
+                                    <th>Indicador de Quantidade</th>
+                                </tr>
+                            </thead>
+                            <tbody name="tbl-estoque-body"></tbody>
+                        </table>
+                        <table class="tbl-default" name="tbl-vendas" cellpadding="0" cellspacing="0"
+                            style="display: none;">
+                            <caption>Vendas:</caption>
+                            <thead>
+                                <div class="regist-botao">
+                                    <div class="clearfix"></div>
+                                </div>
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>CPF</th>
+                                    <th>Produto</th>
+                                    <th>Código Produto</th>
+                                    <th>Quantidade Vendida</th>
+                                    <th>Tipo</th>
+                                    <th>Preço Unitário (R$)</th>
+                                    <th>Total (R$)</th>
+                                    <th>Data</th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody name="tbl-vendas-body"></tbody>
+                        </table>
+                        <table class="tbl-default" name="tbl-ajustes" cellpadding="0" cellspacing="0"
+                            style="display: none;">
+                            <caption>Ajustes:</caption>
+                            <thead>
+                                <div class="regist-botao">
+                                    <div class="clearfix"></div>
+                                </div>
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Código</th>
+                                    <th>Quantidade Ajustada</th>
+                                    <th>Nova quantidade Mínima</th>
+                                    <th>Nova quantidade Máxima</th>
+                                    <th>Novo Setor</th>
+                                    <th>Novo Preço (R$)</th>
+                                    <th>Observações</th>
+                                    <th>Data</th>
+                                    <th>Hora</th>
+                                </tr>
+                            </thead>
+                            <tbody name="tbl-ajustes-body"></tbody>
+                        </table>
+                        <table class="tbl-default" name="tbl-clientes" cellpadding="0" cellspacing="0"
+                            style="display: none;">
+                            <caption>Clientes:</caption>
+                            <caption>(AS INFORMAÇÕES NESTA TABELA PODEM SER ALTERADAS COM CLIQUE DUPLO!)</caption>
+                            <thead>
+                                <div class="regist-botao">
+                                    <div class="clearfix"></div>
+                                </div>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>CPF</th>
+                                    <th>Telefone</th>
+                                    <th>E-mail</th>
+                                    <th>Endereço</th>
+
+                                </tr>
+                            </thead>
+                            <tbody name="tbl-clientes-body"></tbody>
+                        </table>
+                    </center>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        var produtoArr = JSON.parse(localStorage.getItem('produtos')) || [];
+        var vendasArr = JSON.parse(localStorage.getItem('vendas')) || [];
+        var ajustesArr = JSON.parse(localStorage.getItem('ajustes')) || [];
+        var clientesArr = JSON.parse(localStorage.getItem('clientes')) || [];
+
+        function calcularDiasDesdeFabricacao(dataFabricacao) {
+            var fabricacao = new Date(dataFabricacao);
+            var hoje = new Date();
+            var diasDesdeFabricacao = Math.floor((hoje - fabricacao) / (1000 * 60 * 60 * 24));
+            return diasDesdeFabricacao;
+        }
+
+        function getClassificacao(produto) {
+            if (produto.tipoProduto === 'Destilados') {
+                var diasDesdeFabricacao = calcularDiasDesdeFabricacao(produto.fabio);
+
+                if (diasDesdeFabricacao > 365 * 3) {
+                    return 'Extra Premium (3 anos+)';
+                } else if (diasDesdeFabricacao > 365 * 2) {
+                    return 'Premium (2 anos)';
+                } else if (diasDesdeFabricacao > 365) {
+                    return 'Premium (1 ano)';
+                } else if (diasDesdeFabricacao <= 365) {
+                    return 'Ouro/Prata';
+                }
+            }
+
+            return 'Não Classificado';
+        }
+
+        if (produtoArr.length) {
+            produtoArr.forEach(function (_produto) {
+                var _tr = document.createElement('tr');
+
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.nome + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.codigo + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.setor + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.qtd + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.qtdMin + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.qtdMax + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.tipoProduto + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.und + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>R$' + parseFloat(_produto.price).toFixed(2) + '</td>');
+
+                var quantidade = parseInt(_produto.qtd) || 0;
+                var total = quantidade * parseFloat(_produto.price);
+
+                if (!isNaN(_produto.val)) {
+                    _produto.val = "Validade não definida";
+                }
+
+                if (!isNaN(_produto.fabio)) {
+                    _produto.fabio = "Fabricação não definida";
+                }
+
+                _tr.insertAdjacentHTML('beforeend', '<td>R$' + total.toFixed(2) + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.fabio + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + _produto.val + '</td>');
+
+                var classificacao = getClassificacao(_produto);
+                _tr.insertAdjacentHTML('beforeend', '<td>' + classificacao + '</td>');
+
+                var indicadorEstoque = document.createElement('td');
+
+                var qtdMin = parseInt(_produto.qtdMin) || 0;
+                var qtdMax = parseInt(_produto.qtdMax) || Infinity;
+
+                if (quantidade < qtdMin) {
+                    indicadorEstoque.innerHTML = '<img src="assets/DOWNRARROW.ico" data-cod="' + _produto.codigo + '">';
+                    _tr.classList.add('abaixo-min');
+                } else if (quantidade > qtdMax) {
+                    indicadorEstoque.innerHTML = '<img src="assets/UPRARROW.ico" data-cod="' + _produto.codigo + '">';
+                    _tr.classList.add('acima-max');
+                } else {
+                    indicadorEstoque.innerHTML = '<img src="assets/NEUTRAL.ico">';
+                }
+
+                indicadorEstoque.addEventListener('click', function () {
+                    redirecionar('ajuste.html', _produto.codigo);
+                });
+
+                _tr.appendChild(indicadorEstoque);
+
+                document.getElementsByName('tbl-estoque-body')[0].insertAdjacentElement('beforeend', _tr);
+
+                function redirecionar(pagina, codigoProduto) {
+                    window.location.href = pagina + '?cod=' + codigoProduto;
+                }
+            });
+        }
+
+        vendasArr.forEach(function (vendas, index) {
+            vendas.timestamp = new Date().getTime() + index;
+        });
+
+        if (vendasArr.length) {
+            vendasArr.sort(function (a, b) {
+                return b.timestamp - a.timestamp;
+            });
+
+            vendasArr.forEach(function (venda) {
+                var _tr = document.createElement('tr');
+
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.clienteNome + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.clienteCodigo + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.nome + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.codigo + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.qtd + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.tipoProd + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>R$' + parseFloat(venda.preco_unitario).toFixed(2) + '</td>');
+
+                var total = venda.qtd * venda.preco_unitario;
+                _tr.insertAdjacentHTML('beforeend', '<td>R$' + total.toFixed(2) + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.data + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + venda.hora + '</td>');
+
+                document.getElementsByName('tbl-vendas')[0].insertAdjacentElement('beforeend', _tr);
+            });
+        }
+
+        ajustesArr.forEach(function (ajuste, index) {
+            ajuste.timestamp = new Date().getTime() + index;
+        });
+
+        if (ajustesArr.length) {
+            ajustesArr.sort(function (a, b) {
+                return b.timestamp - a.timestamp;
+            });
+
+            ajustesArr.forEach(function (ajuste) {
+                var _tr = document.createElement('tr');
+
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.nome + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.codigo + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.quantidadeAjustada + '</td>');
+
+                if (ajuste.NOVAqtdMin !== undefined) {
+                    _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.NOVAqtdMin + '</td>');
+                } else {
+                    _tr.insertAdjacentHTML('beforeend', '<td></td>');
+                }
+
+                if (ajuste.NOVAqtdMax !== undefined) {
+                    _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.NOVAqtdMax + '</td>');
+                } else {
+                    _tr.insertAdjacentHTML('beforeend', '<td></td>');
+                }
+
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.novoSetor + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>R$' + parseFloat(ajuste.novoPreco).toFixed(2) + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.observacoes + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.data + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + ajuste.hora + '</td>');
+
+                document.getElementsByName('tbl-ajustes-body')[0].insertAdjacentElement('beforeend', _tr);
+            });
+        }
+
+
+        if (clientesArr.length) {
+            clientesArr.forEach(function (cliente) {
+                var _tr = document.createElement('tr');
+
+                _tr.insertAdjacentHTML('beforeend', '<td>' + cliente.nome + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + cliente.codCliente + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + cliente.telefone + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + cliente.email + '</td>');
+                _tr.insertAdjacentHTML('beforeend', '<td>' + cliente.endereco + '</td>');
+
+                document.getElementsByName('tbl-clientes-body')[0].insertAdjacentElement('beforeend', _tr);
+            });
+        }
+
+        function editarCliente(oldValue, target, rowIndex, columnIndex) {
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.value = oldValue;
+            target.innerHTML = '';
+            target.appendChild(input);
+
+            input.focus();
+
+            input.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    var newValue = input.value.trim();
+
+                    var confirmarAlteracao = window.confirm('Você tem certeza que deseja alterar estas informações? Elas impactarão o resto do sistema.');
+
+                    if (confirmarAlteracao) {
+                        switch (columnIndex) {
+                            case 0:
+                                clientesArr[rowIndex].nome = newValue;
+                                break;
+                            case 1:
+                                clientesArr[rowIndex].codCliente = newValue;
+                                break;
+                            case 2:
+                                clientesArr[rowIndex].telefone = newValue;
+                                break;
+                            case 3:
+                                clientesArr[rowIndex].email = newValue;
+                                break;
+                            case 4:
+                                clientesArr[rowIndex].endereco = newValue;
+                                break;
+                        }
+
+                        localStorage.setItem('clientes', JSON.stringify(clientesArr));
+
+                        target.innerHTML = newValue;
+                    } else {
+                        target.innerHTML = oldValue;
+                    }
+                } else if (e.key === 'Escape') {
+                    target.innerHTML = oldValue;
+                }
+            });
+
+            input.addEventListener('blur', function () {
+                var newValue = input.value.trim();
+
+                var confirmarAlteracao = window.confirm('Você tem certeza que deseja alterar estas informações? Elas impactarão o resto do sistema.');
+
+                if (confirmarAlteracao) {
+                    switch (columnIndex) {
+                        case 0:
+                            clientesArr[rowIndex].nome = newValue;
+                            break;
+                        case 1:
+                            clientesArr[rowIndex].codCliente = newValue;
+                            break;
+                        case 2:
+                            clientesArr[rowIndex].telefone = newValue;
+                            break;
+                        case 3:
+                            clientesArr[rowIndex].email = newValue;
+                            break;
+                        case 4:
+                            clientesArr[rowIndex].endereco = newValue;
+                            break;
+                    }
+
+                    localStorage.setItem('clientes', JSON.stringify(clientesArr));
+                } else {
+                    target.innerHTML = oldValue;
+                }
+            });
+        }
+
+
+        document.getElementsByName('tbl-clientes-body')[0].addEventListener('dblclick', function (event) {
+            var target = event.target;
+            var oldValue = target.textContent.trim();
+
+            if (target.tagName === 'TD') {
+                var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+                var columnIndex = Array.from(target.parentNode.children).indexOf(target);
+
+                editarCliente(oldValue, target, rowIndex, columnIndex);
+            }
+        });
+
+        var tblAjustes = document.getElementsByName('tbl-ajustes')[0];
+        var tblVendas = document.getElementsByName('tbl-vendas')[0];
+        var tblEstoque = document.getElementsByName('tbl-produtos')[0];
+        var tblClientes = document.getElementsByName('tbl-clientes')[0];
+
+        document.querySelector('[name="ajuste-botao"]').addEventListener('click', function () {
+            tblAjustes.style.display = tblAjustes.style.display === 'table' ? 'none' : 'table';
+            tblVendas.style.display = 'none';
+            tblEstoque.style.display = 'none';
+            tblClientes.style.display = 'none';
+        });
+
+        document.querySelector('[name="venda-botao"]').addEventListener('click', function () {
+            tblAjustes.style.display = 'none';
+            tblVendas.style.display = tblVendas.style.display === 'table' ? 'none' : 'table';
+            tblEstoque.style.display = 'none';
+            tblClientes.style.display = 'none';
+        });
+
+        document.querySelector('[name="estoque-botao"]').addEventListener('click', function () {
+            tblAjustes.style.display = 'none';
+            tblVendas.style.display = 'none';
+            tblEstoque.style.display = tblEstoque.style.display === 'table' ? 'none' : 'table';
+            tblClientes.style.display = 'none';
+        });
+
+        document.querySelector('[name="clientes-botao"]').addEventListener('click', function () {
+            tblAjustes.style.display = 'none';
+            tblVendas.style.display = 'none';
+            tblEstoque.style.display = 'none';
+            tblClientes.style.display = tblClientes.style.display === 'table' ? 'none' : 'table';
+        });
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>

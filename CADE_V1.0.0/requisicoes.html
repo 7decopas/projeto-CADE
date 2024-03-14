@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/BUYbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li><a href="inicio.html">Início</a></li>
+                                <li><a href="cadastroProduto.html">Produtos</a></li>
+                                <li><a href="cadastroClientes.html">Clientes</a></li>
+                                <li><a href="registros.html">Registros</a></li>
+                                <li class="active"><a href="requisicoes.html">Vendas</a></li>
+                                <li><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2" valign="center">
+                    <div class="back-color">
+                        <div class="container-inpts">
+                            <div class="ci-title">Informações do Cliente</div>
+                            <table>
+                                <tbody>
+                                    <label>
+                                        <input name="cliente-cod" placeholder="CPF">
+                                    </label>
+                                    <td>
+                                        <label>
+                                            <input name="cliente-nome" placeholder="Nome do Cliente" readonly>
+                                        </label>
+                                    </td>
+                                    <td>
+                                        <label>
+                                            <input name="cliente-email" placeholder="E-mail do Cliente" readonly>
+                                        </label>
+                                    <td>
+                                    </td>
+                                </tbody>
+                            </table>
+                            <br>
+                            <hr>
+                            <br>
+                            <table>
+                                <tbody>
+                                    <div class="ci-title">Informações do Produto</div>
+                                    <label>
+                                        <input name="cod" placeholder="Código do Produto">
+                                    </label>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input name="nome" placeholder="Produto" readonly>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="qtd" placeholder="Qtd. em Estoque" readonly>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="preco" placeholder="Preço (R$)" readonly>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <td>
+                                    </td>
+                                </tbody>
+                            </table>
+                            <br>
+                            <hr>
+                            <br>
+                            <table>
+                                <tbody>
+                                    <div class="ci-title">Total da Venda</div>
+                                    <tr>
+                                        <td>
+                                            <label>
+                                                <input name="qtd_pedido" placeholder="Qtd.">
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label>
+                                                <input name="preco_pedido" placeholder="Preço Total" readonly>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="clearfix"></div>
+                            <button name="acao">Registrar</button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+    <script>
+        var clientesArr = JSON.parse(localStorage.getItem('clientes')) || [];
+        var produtosArr = JSON.parse(localStorage.getItem('produtos')) || [];
+        var vendasArr = JSON.parse(localStorage.getItem('vendas')) || [];
+
+        var _clienteSelecionado,
+            achouCliente,
+            _clienteNomeInput = document.querySelector('[name="cliente-nome"]'),
+            _clienteEmailInput = document.querySelector('[name="cliente-email"]'),
+            _produtoSelecionado,
+            achouProduto,
+            _produtoNomeInput = document.querySelector('[name="nome"]'),
+            _produtoQtdInput = document.querySelector('[name="qtd"]'),
+            _produtoPrecoInput = document.querySelector('[name="preco"]'),
+            _produtoPedidoQtdInput = document.querySelector('[name="qtd_pedido"]'),
+            _produtoPedidoPrecoInput = document.querySelector('[name="preco_pedido"]');
+
+        if (clientesArr.length && produtosArr.length) {
+            function buscarClientes(codCliente) {
+                _clienteSelecionado = false;
+                achouCliente = false;
+                clientesArr.forEach(function (cliente) {
+                    if (cliente.codCliente == codCliente && !achouCliente) {
+                        _clienteSelecionado = cliente;
+                        achouCliente = true;
+                    }
+                });
+
+                if (_clienteSelecionado) {
+                    _clienteNomeInput.value = _clienteSelecionado.nome;
+                    _clienteEmailInput.value = _clienteSelecionado.email;
+                } else {
+                    _clienteNomeInput.value = '';
+                    _clienteEmailInput.value = '';
+                }
+            }
+
+            function buscarProdutos(codProduto) {
+                _produtoSelecionado = false;
+                achouProduto = false;
+                produtosArr.forEach(function (produto) {
+                    if (produto.codigo == codProduto && !achouProduto) {
+                        _produtoSelecionado = produto;
+                        achouProduto = true;
+                    }
+                });
+
+                if (_produtoSelecionado) {
+                    _produtoNomeInput.value = _produtoSelecionado.nome;
+                    _produtoQtdInput.value = _produtoSelecionado.qtd;
+                    _produtoPrecoInput.value = 'R$' + parseFloat(_produtoSelecionado.price).toFixed(2);
+                } else {
+                    _produtoNomeInput.value = '';
+                    _produtoQtdInput.value = '';
+                    _produtoPrecoInput.value = '';
+                }
+            }
+
+            _produtoPedidoQtdInput.addEventListener('keyup', function (e) {
+                var valor_qtd = parseFloat(e.target.value);
+                var estoque_qtd = parseFloat(_produtoSelecionado.qtd);
+                var preco_unitario = parseFloat(_produtoSelecionado.price);
+
+                if (_produtoPedidoQtdInput.value.trim() !== '') {
+                    if (isNaN(valor_qtd) || isNaN(estoque_qtd) || estoque_qtd < valor_qtd) {
+                        alert('Quantidade insuficiente em estoque ou valor inválido.');
+                    } else {
+                        var valor_total = valor_qtd * preco_unitario;
+                        _produtoPedidoPrecoInput.value = 'R$' + parseFloat(valor_total.toFixed(2));
+                    }
+                }
+            });
+
+            document.querySelector('[name="acao"]').addEventListener('click', function () {
+                if (_clienteSelecionado && _produtoSelecionado && _produtoPedidoQtdInput.value.trim() !== '') {
+                    var pedido_qtd = parseInt(_produtoPedidoQtdInput.value);
+
+                    if (!isNaN(pedido_qtd) && _produtoSelecionado.qtd >= pedido_qtd && pedido_qtd > 0) {
+                        _produtoSelecionado.qtd -= pedido_qtd;
+
+                        var horario = new Date();
+                        var venda = {
+                            clienteCodigo: _clienteSelecionado.codCliente,
+                            clienteNome: _clienteSelecionado.nome,
+                            clienteEmail: _clienteSelecionado.email,
+                            codigo: _produtoSelecionado.codigo,
+                            nome: _produtoSelecionado.nome,
+                            qtd: pedido_qtd,
+                            tipoProd: _produtoSelecionado.tipoProduto,
+                            preco_unitario: parseFloat(_produtoSelecionado.price),
+                            data: new Date().toLocaleDateString(),
+                            hora: horario.toLocaleTimeString()
+                        };
+
+                        vendasArr.push(venda);
+
+                        localStorage.setItem('produtos', JSON.stringify(produtosArr));
+                        localStorage.setItem('vendas', JSON.stringify(vendasArr));
+
+                        alert('Venda registrada com sucesso!');
+                    } else {
+                        alert('Quantidade insuficiente em estoque, valor inválido ou quantidade igual a zero.');
+                    }
+                } else {
+                    alert('Selecione um cliente, um produto e informe a quantidade.');
+                }
+            });
+
+            document.querySelector('[name="cliente-cod"]').addEventListener('change', function (e) {
+                buscarClientes(e.target.value);
+            });
+            document.querySelector('[name="cliente-cod"]').addEventListener('keyup', function (e) {
+                buscarClientes(e.target.value);
+            });
+
+            document.querySelector('[name="cod"]').addEventListener('change', function (e) {
+                buscarProdutos(e.target.value);
+            });
+            document.querySelector('[name="cod"]').addEventListener('keyup', function (e) {
+                buscarProdutos(e.target.value);
+            });
+        }
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <link rel="icon" href="assets\ICONHTML.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <style>
+        body {
+            background-image: url('assets/REGISTERbackground.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .input-2col {
+            display: inline-flex;
+            flex-direction: row;
+            column-gap: 10px;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        .inpt-col {
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="main-container" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+                <td>
+                    <div class="logo">
+                        <div class="glow-on-hover">
+                            <img src="assets/ICONHTMLPAG.ico" alt="">
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="menu">
+                        <div class="container">
+                            <ul>
+                                <li><a href="inicio.html">Início</a></li>
+                                <li class="active"><a href="cadastroProduto.html">Produtos</a></li>
+                                <li><a href="cadastroClientes.html">Clientes</a></li>
+                                <li><a href="registros.html">Registros</a></li>
+                                <li><a href="requisicoes.html">Vendas</a></li>
+                                <li><a href="ajuste.html">Ajuste</a></li>
+                                <li><a href="login.html"> « Sair » </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">
+                    <div class="back-color">
+                        <div class="container-inpts">
+                            <div class="ci-title">Cadastro de Produtos</div>
+                            <label>
+                                <input name="nome" placeholder="Nome">
+                            </label>
+                            <label>
+                                <input name="cod" placeholder="Código">
+                            </label>
+                            <label>
+                                <input name="setor" placeholder="Setor/Prateleira">
+                            </label>
+                            <label>
+                                <input name="qtd" placeholder="Quantidade">
+                            </label>
+                            <div class="input-2col">
+                                <div class="inpt-col">
+                                    <label>
+                                        <input name="qtdMin" type="number" min="1" max="1.000.000"
+                                            placeholder="Quantidade Mínima">
+                                    </label>
+                                </div>
+                                <div class="inpt-col">
+                                    <label>
+                                        <input name="qtdMax" type="number" min="1" max="1.000.000"
+                                            placeholder="Quantidade Máxima">
+                                    </label>
+                                </div>
+                            </div>
+                            <label>
+                                <select name="tipoProd" placeholder="Tipo do Produto">
+                                    <option value="" disabled style="display: none;" selected>Tipo do Produto</option>
+                                    <option value="Destilados">Destilados</option>
+                                    <option value="Perecível">Perecíveis</option>
+                                    <option value="Outros">Outros</option>
+                                </select>
+                            </label>
+                            <label>
+                                <select name="unidade" placeholder="Unidade">
+                                    <option value="" disabled style="display: none;" selected>Unidade de Medida</option>
+                                    <option value="KG">(KG)</option>
+                                    <option value="Litro">(L)</option>
+                                    <option value="Unidade">(UN)</option>
+                                </select>
+                            </label>
+                            <label>
+                                <input name="price" placeholder="R$">
+                            </label>
+
+                            <div class="input-2col">
+                                <div class="inpt-col">
+                                    <label>
+                                        <input type="text" name="fabio" placeholder="Fabricação"
+                                            onfocus="this.type='date'" onblur="this.type='text'">
+                                    </label>
+                                </div>
+                                <div class="inpt-col">
+                                    <label>
+                                        <input type="text" name="val" placeholder="Validade" onfocus="this.type='date'"
+                                            onblur="this.type='text'">
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <button name="acao">Cadastrar</button>
+                        </div>
+
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2">
+                    <div class="footer">Suporte:</div>
+                    <div class="footer">SS & F Tec.</div>
+                    <div class="footer">(47) 91945-2001</div>
+                </td>
+            </tr>
+
+        </tfoot>
+    </table>
+
+    <script>
+        document.querySelector('[name="acao"]').addEventListener('click', function (e) {
+            var produtoArr = JSON.parse(localStorage.getItem('produtos')) ?? [];
+
+            var _codigo = document.querySelector('[name="cod"]').value,
+                _nome = document.querySelector('[name="nome"]').value,
+                _qtd = document.querySelector('[name="qtd"]').value,
+                _qtdMin = document.querySelector('[name="qtdMin"]').value,
+                _qtdMax = document.querySelector('[name="qtdMax"]').value,
+                _tipoProd = document.querySelector('[name="tipoProd"]').value,
+                _setor = document.querySelector('[name="setor"]').value,
+                _und = document.querySelector('[name="unidade"]').value,
+                _price = document.querySelector('[name="price"]').value.replace(',', '.'),
+                _fabio = document.querySelector('[name="fabio"]').value,
+                _val = document.querySelector('[name="val"]').value;
+
+            if (!_codigo || !_nome || !_qtd || !_setor || !_und || !_price || !_tipoProd || !_und || !_qtdMin || !_qtdMax) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
+            if (isNaN(_qtd) || isNaN(_price) || (_qtd < 0)) {
+                alert('Por favor, corrija todos os campos de . Eles devem ter valores válidos');
+                return;
+            }
+
+            if (parseFloat(_price) > 1000000) {
+                alert('O preço não pode ser maior do que R$1.000.000');
+                return;
+            }
+
+            if (parseInt(_qtd) > 1000000) {
+                alert('A quantidade não pode ser maior do que 1.000.000');
+                return;
+            }
+
+            var codigoJaRegistrado = produtoArr.some(function (produto) {
+                return produto.codigo === _codigo;
+            });
+
+            if (codigoJaRegistrado) {
+                alert('O código do produto já está em uso. Por favor, escolha outro código.');
+                return;
+            }
+
+            alert('Cadastro Concluído!');
+
+            var produto = {
+                codigo: _codigo,
+                nome: _nome,
+                qtd: _qtd,
+                qtdMin: _qtdMin,
+                qtdMax: _qtdMax,
+                tipoProduto: _tipoProd,
+                setor: _setor,
+                und: _und,
+                price: parseFloat(_price),
+                fabio: _fabio,
+                val: _val
+            };
+
+            produtoArr.push(produto);
+            localStorage.setItem('produtos', JSON.stringify(produtoArr));
+        });
+
+        document.querySelector('.logo').addEventListener('click', function () {
+            window.location.href = 'inicio.html';
+        });
+    </script>
+</body>
+
+</html>
